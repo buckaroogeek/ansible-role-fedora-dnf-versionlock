@@ -15,11 +15,11 @@ Variables that can be set in a playbook are listed below, along with default val
 
 | Variable   | Default Value | Type | Notes |
 | ---------- | ------------- | ----- | ----- |
-| fdv_enabled | true | Boolean | Enables (true) or disables (false) use of local repository |
-| fdv_present | true | Boolean | If false, removes dnf versionlock plugin rpm from system |
-| fdv_cmd | none    | String | One of add, delete, exclude, list, clear |
-| fdv_package_spec | none    | String | Required when fdv_cmd is one of add, delete, exclude. The package specification for versionlock to act on |
-| fdv_raw | false    | Boolean | Adds --raw option |
+| fdv_enabled | true | boolean | Enables (true) or disables (false) use of local repository |
+| fdv_present | true | boolean | If false, removes dnf versionlock plugin rpm from system |
+| fdv_cmd | none    | string | One of add, delete, exclude, list, clear |
+| fdv_package_spec | none    | string | Required when fdv_cmd is one of add, delete, exclude. The package specification for versionlock to act on |
+| fdv_raw | false    | boolean | Adds --raw option |
 
 Technical Notes
 ---------------
