@@ -1,4 +1,4 @@
-Fedora DNF Versionlock Plugin Ansible Role
+Ansible Role - Fedora DNF Versionlock Plugin
 =========
 
 Implements basic subcommends of the DNF versionlock plugin. Does not provide ability to add DNF options.
