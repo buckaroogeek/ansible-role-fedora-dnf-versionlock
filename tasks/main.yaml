@@ -1,0 +1,84 @@
+---
+# defaults file for fedora_dnf_versionlock
+#
+
+# ## Sanity Checks on input
+
+# fdv_cmd must be add, delete, exclude, list or clear if defined
+- name: Check for valid fdv_cmd
+  assert:
+    that:
+      - fdv_cmd in fdv_cmd_set
+  when: fdv_cmd is defined
+
+# define fdv_cmd as 'none' if undefined
+- name: Set fdv_cmd to none if undefined
+  set_fact:
+    fdv_cmd: none
+  when: fdv_cmd is undefined
+
+# fdv_package_spec must be set for add, exclude, delete
+- name: Check for package_spec if required
+  fail: msg="fdv_package_spec is not set"
+  when: fdv_cmd in ['add', 'delete', 'exclude'] and fdv_package_spec is undefined
+
+# set _dnfstate based on fdv_present
+# set _dnf_cmd to fdv_cmd or 'none'
+- name: set versionlock package state
+  set_fact:
+    _dnf_state: "{{ fdv_present | ternary('present','absent') }}"
+    _dnf_cmd: "{{ fdv_present | ternary(fdv_cmd,'none') }}"
+
+# install/remove plugin
+- name: install versionlock plugin
+  dnf:
+    name: 'dnf-command(versionlock)'
+    state: "{{ _dnf_state }}"
+
+# append --raw if toggled; valid only for add or exclude
+- name: add raw if requested
+  set_fact:
+    _spec: "{{ (fdv_raw | ternary('--raw ',' '))+fdv_package_spec }}"
+  when: _dnf_cmd in ['add','exclude']
+
+# add
+- name: "versionlock add with {{ _spec }}"
+  command: "dnf versionlock add {{ _spec }}"
+  register: result
+  changed_when: "'Adding versionlock on' in result.sdout"
+  when: _dnf_cmd in ['add']
+
+# delete
+- name: "versionlock delete with {{ _spec }}"
+  command: "dnf versionlock delete {{ _spec }}"
+  register: result
+  changed_when: "'Deleting versionlock for' in result.sdout"
+  when: _dnf_cmd in ['delete']
+
+# exclude
+- name: "versionlock exclude with {{ _spec }}"
+  command: "dnf versionlock exclude {{ _spec }}"
+  register: result
+  changed_when: "'Adding exclude on' in result.sdout"
+  when: _dnf_cmd in ['exclude']
+
+# list
+- name: "versionlock list"
+  command: "dnf versionlock list"
+  register: result
+  changed_when: false
+  when: _dnf_cmd in ['list']
+
+# clear
+- name: "versionlock clear"
+  command: "dnf versionlock clear"
+  register: result
+  changed_when: false
+  when: _dnf_cmd in ['clear']
+
+# stdout echo
+- name: Display versionlock stdout
+  debug:
+    msg: "{{ result.stdout }}"
+  when: _dnf_cmd in fdv_cmd_set
+...

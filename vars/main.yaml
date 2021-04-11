@@ -1,0 +1,13 @@
+---
+# vars file for fedora_dnf_versionlock
+#
+
+# list of versionlock subcommands
+fdv_cmd_set:
+  - add
+  - delete
+  - exclude
+  - list
+  - clear
+
+...

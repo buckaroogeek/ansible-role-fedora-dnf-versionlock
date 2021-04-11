@@ -1,0 +1,11 @@
+---
+# defaults file for fedora_dnf_versionlock
+
+# versionlock enabled
+fdv_enabled: true
+
+# versionlock present - false will remove package
+fdv_present: true
+
+# raw toggle
+fdv_raw: false
