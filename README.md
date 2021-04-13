@@ -8,6 +8,19 @@ Requirements
 
 Fedora is the only platform tested at the moment. It should work for any linux system that uses DNF for package management.
 
+Role Operation
+--------------
+
+The dnf versionlock plugin manages a list of rpm package names and versions that affect the list of packages that dnf will include in a transaction. The plugin will 'lock' the listed packages to the listed versions. See the playbook examples below for more details.
+
+The plugin operates using commands and a package list (specification). The role operates with a command (fdv_cmd) and a package specification (fdv_package_spec). The default command without a package spec is `list`. The default command with a package spec is `add`.
+
+The role will install the plugin if not present. Set `fdv_present` to `false` to remove the plugin.
+
+The role can be disabled, but not removed by setting `fdv_enabled` to false.
+
+The exclude command 'adds' the package spec to the list versionlock manages, but is used to exclude all matching package names from any dnf transaction.
+
 Role Variables
 --------------
 
@@ -15,11 +28,11 @@ Variables that can be set in a playbook are listed below, along with default val
 
 | Variable   | Default Value | Type | Notes |
 | ---------- | ------------- | ----- | ----- |
-| fdv_enabled | true | boolean | Enables (true) or disables (false) use of local repository |
-| fdv_present | true | boolean | If false, removes dnf versionlock plugin rpm from system |
-| fdv_cmd | none    | string | One of add, delete, exclude, list, clear |
+| fdv_cmd | See Operation above  | string | One of add, delete, exclude, list, clear |
 | fdv_package_spec | none    | string | Required when fdv_cmd is one of add, delete, exclude. The package specification for versionlock to act on |
 | fdv_raw | false    | boolean | Enables --raw option if true |
+| fdv_enabled | true | boolean | Enables (true) or disables (false) use of local repository |
+| fdv_present | true | boolean | If false, removes dnf versionlock plugin rpm from system |
 
 Technical Notes
 ---------------

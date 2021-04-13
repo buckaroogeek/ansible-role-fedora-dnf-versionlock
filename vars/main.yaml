@@ -2,6 +2,9 @@
 # vars file for fedora_dnf_versionlock
 #
 
+# set path for conf file
+fdv_conf: /etc/dnf/plugins/versionlock.conf
+
 # list of versionlock subcommands
 fdv_cmd_set:
   - add
