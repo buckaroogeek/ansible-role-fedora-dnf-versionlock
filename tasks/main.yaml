@@ -22,9 +22,9 @@
 - name: Check for package_spec if required
   fail:
     msg: "fdv_package_spec is not set"
-  when: >
-    - (fdv_cmd in ['add', 'delete', 'exclude']) and
-    - (fdv_package_spec is match(fdv_undefined))
+  when:
+    - fdv_cmd in ['add', 'delete', 'exclude']
+    - fdv_package_spec is match(fdv_undefined)
 
 # set _dnf_cmd to fdv_cmd or 'conf' if fdv_enabled is false
 # a command of 'conf' will trigger the setting of disabled in
