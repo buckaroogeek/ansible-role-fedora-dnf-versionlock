@@ -1,0 +1,21 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "add"
+      include_role:
+        name: "fedora_dnf_versionlock"
+      vars:
+        fdv_cmd: add
+        fdv_package_spec: bash dnf ansible
+
+    - name: "list - default"
+      include_role:
+        name: "fedora_dnf_versionlock"
+
+    - name: "clear - default"
+      include_role:
+        name: "fedora_dnf_versionlock"
+      vars:
+        fdv_cmd: clear
+...
