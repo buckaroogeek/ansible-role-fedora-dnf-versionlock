@@ -48,14 +48,57 @@ Dependencies
 
 None
 
-Example Playbook
+Example Playbooks
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Add the current version of bash and dnf to versionlock:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
+  hosts: all
+  tasks:
+    - name: "add"
+      include_role:
+        name: "fedora_dnf_versionlock"
+      vars:
+        fdv_cmd: add
+        fdv_package_spec: bash dnf 
+```
+
+Run default versionlock command (list):
+```
+  hosts: all
+  tasks:
+    - name: "list current versionlock packages"
+      include_role:
+        name: "fedora_dnf_versionlock"
+```
+
+Add a versionlock on kubectl, kubeadm, kubelet for version 1.20 but allow patch releases.
+
+```
+  hosts: all
+  tasks:
+    - name: "add"
+      include_role:
+        name: "fedora_dnf_versionlock"
+      vars:
+        fdv_cmd: add
+        fdv_package_spec: kube???-1.20.*
+        fdv_raw: true
+```
+
+Create a versionlock exclude on kubernetes rpms:
+
+```
+  hosts: all
+  tasks:
+    - name: "exclude"
+      include_role:
+        name: "fedora_dnf_versionlock"
+      vars:
+        fdv_cmd: exclude
+        fdv_package_spec: kubernetes
+```
 
 License
 -------
