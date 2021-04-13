@@ -3,3 +3,4 @@
 *.pyc
 .cache
 *.swp
+Session.vim
