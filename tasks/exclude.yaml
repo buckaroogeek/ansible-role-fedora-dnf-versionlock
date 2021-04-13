@@ -1,6 +1,11 @@
 ---
 # executes versionlock exclude command
 
+# call setup.yaml
+- name: setup
+  include_tasks: setup.yaml
+
+# exclude
 - name: "dnf versionlock exclude"    # noqa no-changed-when
   command:
     cmd: "dnf versionlock exclude {{ _spec }}" # noqa no-changed-when
@@ -10,7 +15,7 @@
 
 # display the result
 # stdout echo
-- name: Display versionlock output
+- name: Display versionlock exclude output
   debug:
     msg: "{{ _cmdresult.stdout }}"
 
