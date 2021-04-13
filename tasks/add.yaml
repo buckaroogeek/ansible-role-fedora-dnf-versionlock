@@ -11,7 +11,7 @@
     cmd: "dnf versionlock add {{ _spec }}" # noqa no-changed-when
     warn: false
   register: _cmdresult
-  changed_when: "'Adding version lock on' in _cmdresult.stdout"
+  changed_when: "'Adding versionlock on' in _cmdresult.stdout"
 
 # display the result
 # stdout echo
