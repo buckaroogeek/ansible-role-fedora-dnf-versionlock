@@ -1,0 +1,9 @@
+---
+# install or remove plugin
+
+- name: call dnf module
+  dnf:
+    name: 'dnf-command(versionlock)'
+    state: "{{ fdv_present | ternary('present','absent') }}"
+
+...

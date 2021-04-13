@@ -1,0 +1,22 @@
+---
+# executes versionlock clear command
+
+# include setup.yaml
+- name: include setup.yaml
+  include_tasks: setup.yaml
+
+# clear
+- name: "dnf versionlock clear"    # noqa no-changed-when
+  command:
+    cmd: "dnf versionlock clear" # noqa no-changed-when
+    warn: false
+  register: _cmdresult
+  changed_when: true
+
+# display the result
+# stdout echo
+- name: Display versionlock clear output
+  debug:
+    msg: "{{ _cmdresult.stdout }}"
+
+...

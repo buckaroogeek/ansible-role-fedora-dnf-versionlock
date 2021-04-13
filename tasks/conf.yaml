@@ -1,0 +1,9 @@
+---
+# set enabled/disabled in configuration file
+- name: Set enabled/disabled in configuration file
+  community.general.ini_file:
+    path: "{{ fdv_conf }}"
+    section: main
+    option: enabled
+    value: "{{ fdv_enabled | ternary('true','false') }}"
+...

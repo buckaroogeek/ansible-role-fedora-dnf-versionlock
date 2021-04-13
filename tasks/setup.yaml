@@ -1,0 +1,37 @@
+---
+# setup role to process commands: add, delete, exclude
+#
+
+# install/remove plugin
+- name: include dnf.yaml
+  include_tasks: dnf.yaml
+
+# set enabled/disabled in configuration file
+- name: include conf.yaml
+  include_tasks: conf.yaml
+
+# define _spec
+- name: build package spec if needed
+  set_fact:
+    _spec: "{{ fdv_package_spec }}"
+  when: _dnf_cmd in ['add','delete','exclude']
+
+# append --raw if toggled; valid only for add or exclude.
+- name: add raw if requested
+  set_fact:
+    _spec: "{{ fdv_raw | ternary('--raw ',' ')+_spec }}"
+  when: _dnf_cmd in ['add','exclude']
+
+# reset defaults, values already used/captured
+- name: reset defaults
+  set_fact:
+    fdv_package_spec: "{{ fdv_undefined }}"
+    fdv_enabled: true
+    fdv_raw: false
+
+# display _spec
+#- name: debug spec
+#  debug:
+  #    msg: " {{ _spec }}, {{ fdv_raw }} "
+
+...

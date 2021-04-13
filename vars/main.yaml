@@ -13,4 +13,15 @@ fdv_cmd_set:
   - list
   - clear
 
+# fdv_done - is set to true at end of role
+# used to toggle a variable reset if role called more
+# than once in play
+fdv_done: false
+
+# default undefined spec - unintended consequences if
+# this is changed
+fdv_undefined: "undefined"
+
+# default command
+fdv_default_cmd: list
 ...

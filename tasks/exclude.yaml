@@ -1,0 +1,17 @@
+---
+# executes versionlock exclude command
+
+- name: "dnf versionlock exclude"    # noqa no-changed-when
+  command:
+    cmd: "dnf versionlock exclude {{ _spec }}" # noqa no-changed-when
+    warn: false
+  register: _cmdresult
+  changed_when: "'Adding exclude on' in _cmdresult.stdout"
+
+# display the result
+# stdout echo
+- name: Display versionlock output
+  debug:
+    msg: "{{ _cmdresult.stdout }}"
+
+...

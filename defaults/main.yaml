@@ -1,6 +1,12 @@
 ---
 # defaults file for fedora_dnf_versionlock
 
+# default command is list
+fdv_cmd: "{{ fdv_default_cmd }}"
+
+# default package spec is fdv_undefined
+fdv_package_spec: "{{ fdv_undefined }}"
+
 # versionlock enabled
 fdv_enabled: true
 
@@ -9,3 +15,8 @@ fdv_present: true
 
 # raw toggle
 fdv_raw: false
+
+# cachcache only
+# fdv_cache: false
+
+...

@@ -2,9 +2,36 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include fedora_dnf_versionlock"
+    - name: "clear"
+      include_role:
+        name: "fedora_dnf_versionlock"
+      vars:
+        fdv_cmd: clear
+
+    - name: "add bash dnf"
       include_role:
         name: "fedora_dnf_versionlock"
       vars:
         fdv_cmd: add
-        fdv_package_spec: "kube???-1.20.*"
+        fdv_package_spec: "bash dnf"
+
+    - name: "list"
+      include_role:
+        name: "fedora_dnf_versionlock"
+      vars:
+        fdv_cmd: list
+
+    - name: "delete"
+      include_role:
+        name: "fedora_dnf_versionlock"
+      vars:
+        fdv_cmd: delete
+        fdv_package_spec: "dnf"
+
+    - name: "Include fedora_dnf_versionlock"
+      include_role:
+        name: "fedora_dnf_versionlock"
+      vars:
+        fdv_cmd: delete
+        fdv_package_spec: "dnf"
+...

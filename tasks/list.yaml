@@ -1,0 +1,22 @@
+---
+# executes versionlock list command and subsequent debug
+
+# include setup.yaml
+- name: include setup.yaml
+  include_tasks: setup.yaml
+
+# execute list
+- name: "dnf versionlock list"    # noqa no-changed-when
+  command:
+    cmd: "dnf versionlock list" # noqa no-changed-when
+    warn: false
+  register: _cmdresult
+  changed_when: false
+
+# display the result
+# stdout echo
+- name: Display versionlock list output
+  debug:
+    msg: "{{ _cmdresult.stdout }}"
+
+...
