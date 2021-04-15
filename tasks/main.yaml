@@ -5,23 +5,22 @@
 # ## Sanity Checks on input
 #
 
+# define fdv_cmd as 'list' if not set by user
+- name: Set fdv_cmd to add or list if not set by user
+  set_fact:
+    fdv_cmd: "{{ (fdv_package_spec is match(fdv_undefined)) | ternary ('list','add') }}"
+  when: fdv_cmd is match(fdv_undefined)
+
 # fdv_cmd must be add, delete, exclude, list or clear if defined
 - name: Check for valid fdv_cmd
   assert:
     that:
       - fdv_cmd in fdv_cmd_set
-  when: fdv_cmd is defined
-
-# define fdv_cmd as 'list' if undefined
-- name: Set fdv_cmd to add or list if undefined
-  set_fact:
-    fdv_cmd: "{{ (fdv_package_spec is match(fdv_undefined)) | ternary ('list','add') }}"
-  when: fdv_cmd is match(fdv_default_cmd)
 
 # fdv_package_spec must be set for add, exclude, delete
 - name: Check for package_spec if required
   fail:
-    msg: "fdv_package_spec is not set"
+    msg: "fdv_package_spec is required but not set"
   when:
     - fdv_cmd in ['add', 'delete', 'exclude']
     - fdv_package_spec is match(fdv_undefined)
@@ -34,8 +33,8 @@
     _dnf_cmd: "{{ fdv_enabled | ternary(fdv_cmd,'conf') }}"
 
 # set _dnf_cmd to fdv_cmd or 'dnf' if fdv_present is false
-# a command of dnf will dispatch to the dnf module with 'absent' to remove
-# the versionlock plugin and exit rol
+# a command of dnf will dispatch to the dnf module with 'absent'
+# to remove the versionlock plugin and exit role
 - name: set versionlock package state
   set_fact:
     _dnf_cmd: "{{ fdv_present | ternary(fdv_cmd,'dnf') }}"
@@ -43,7 +42,7 @@
 # clear fdv_cmd
 - name: clear command variable
   set_fact:
-    fdv_cmd: "{{ fdv_default_cmd }}"
+    fdv_cmd: "{{ fdv_undefined }}"
 
 # dispatch to correct task based on _dnf_cmd value
 - name: dispatch to {{ _dnf_cmd }}

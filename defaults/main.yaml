@@ -2,7 +2,7 @@
 # defaults file for fedora_dnf_versionlock
 
 # default command is list
-fdv_cmd: "{{ fdv_default_cmd }}"
+fdv_cmd: "{{ fdv_undefined }}"
 
 # default package spec is fdv_undefined
 fdv_package_spec: "{{ fdv_undefined }}"
