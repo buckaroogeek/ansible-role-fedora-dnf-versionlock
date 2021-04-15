@@ -100,6 +100,18 @@ Create a versionlock exclude on kubernetes rpms:
         fdv_package_spec: kubernetes
 ```
 
+Remove versionlock plugin
+
+```
+  hosts: all
+  tasks:
+    - name: "remove"
+      include_role:
+        name: "fedora_dnf_versionlock"
+      vars:
+        fdv_present: false
+```
+
 License
 -------
 
