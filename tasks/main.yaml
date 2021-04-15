@@ -11,13 +11,14 @@
     fdv_cmd: "{{ (fdv_package_spec is match(fdv_undefined)) | ternary ('list','add') }}"
   when: fdv_cmd is match(fdv_undefined)
 
-# fdv_cmd must be add, delete, exclude, list or clear if defined
+# fdv_cmd must be add, delete, exclude, list or clear
 - name: Check for valid fdv_cmd
   assert:
     that:
       - fdv_cmd in fdv_cmd_set
 
 # fdv_package_spec must be set for add, exclude, delete
+# could move to setup.yaml but leave here for fail fast
 - name: Check for package_spec if required
   fail:
     msg: "fdv_package_spec is required but not set"
