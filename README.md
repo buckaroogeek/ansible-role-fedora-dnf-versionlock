@@ -29,7 +29,7 @@ Variables that can be set in a playbook are listed below, along with default val
 | Variable   | Default Value | Type | Notes |
 | ---------- | ------------- | ----- | ----- |
 | fdv_cmd | See Operation above  | string | One of add, delete, exclude, list, clear |
-| fdv_package_spec | none    | string | Required when fdv_cmd is one of add, delete, exclude. The package specification for versionlock to act on |
+| fdv_package_spec | none    | string | Required when fdv_cmd is one of add, delete, exclude. The package specification for versionlock to act on. Package definition for the plugin is defined at https://dnf.readthedocs.io/en/latest/command_ref.html#specifying-packages. The plug-in technically operates on a <package-name-spec> as defined in the link above. This role will accept a string or a list of package specs. The list is converted to a space separated list.  |
 | fdv_raw | false    | boolean | Enables --raw option if true |
 | fdv_enabled | true | boolean | Enables (true) or disables (false) use of local repository |
 | fdv_present | true | boolean | If false, removes dnf versionlock plugin rpm from system |

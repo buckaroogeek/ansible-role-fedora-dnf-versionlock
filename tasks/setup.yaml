@@ -13,7 +13,13 @@
 # define _spec
 - name: build package spec if needed
   set_fact:
-    _spec: "{{ fdv_package_spec }}"
+    _spec: "{{ fdv_package_spec | join(' ') }}"
+  when: _dnf_cmd in ['add','delete','exclude']
+
+# output spec
+- name: Package spec output if set
+  debug:
+    msg: "{{ _spec }}"
   when: _dnf_cmd in ['add','delete','exclude']
 
 # append --raw if toggled; valid only for add or exclude.
@@ -28,10 +34,5 @@
     fdv_package_spec: "{{ fdv_undefined }}"
     fdv_enabled: true
     fdv_raw: false
-
-# display _spec
-#- name: debug spec
-#  debug:
-  #    msg: " {{ _spec }}, {{ fdv_raw }} "
 
 ...
